@@ -29,17 +29,6 @@ var Todo = mongoose.model('Todo', {
 });
 
     // // create a new instance
-    // var newTodo = new Todo({
-    //     text: 'Cook dinner'
-    // });
-
-    // // add a new model instance to db
-    // newTodo.save().then((doc) => {
-    //     console.log('Saved todo', doc);
-    // }, (e) => {
-    //     console.log('Unable to save todo')
-    // });
-
     // var otherTodo = new Todo({
     //     text: 'Feed the cat',
     //     completed: true,
@@ -63,12 +52,12 @@ var User = mongoose.model('User', {
 });
 
     // create new user
-    var user = new User({
-        email: 'carol@carol.com'
-    });
+    // var user = new User({
+    //     email: 'carol@carol.com'
+    // });
 
-    user.save().then((doc) => {
-        console.log('User saved', doc);
-    }, (e) => {
-        console.log('Unable to save the user', e);
-    });
+    // user.save().then((doc) => {
+    //     console.log('User saved', doc);
+    // }, (e) => {
+    //     console.log('Unable to save the user', e);
+    // });
