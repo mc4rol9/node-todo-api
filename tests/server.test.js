@@ -10,6 +10,12 @@ const request = require('supertest');
 const {app} = require('../server');
 const {Todo} = require('../models/todo');
 
+// to run before any test case
+beforeEach((done) => {
+    // empty todos in db
+    Todo.remove({}).then(() => done());
+});
+
 describe('POST /todos', () => {
     it('should create a new todo', (done) => {
         var text = 'Test todo text';
