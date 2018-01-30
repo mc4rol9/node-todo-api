@@ -2,6 +2,8 @@
 // TODO APP - ROOT FILE
 //
 
+require('./config/config');
+
 // load in libraries
 const _ = require('lodash');
 const express = require('express');
@@ -16,7 +18,7 @@ var {User} = require('./models/user');
 // setup app
 var app = express();
 // setup port from server or local 3000
-const port = process.env.PORT || 3000;
+const port = process.env.PORT;
 
 // middleware
 app.use(bodyParser.json());
