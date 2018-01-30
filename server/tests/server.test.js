@@ -7,8 +7,8 @@ const expect = require('expect');
 const request = require('supertest');
 
 // load in project files
-const {app} = require('../server');
-const {Todo} = require('../models/todo');
+const {app} = require('./../server');
+const {Todo} = require('./../models/todo');
 
 // to run before any test case
 beforeEach((done) => {
@@ -25,7 +25,7 @@ describe('POST /todos', () => {
             .send({text})
             .expect(200)
             .expect((res) => {
-                expect(res.body.text)toBe(text);
+                expect(res.body.text).toBe(text);
             })
             .end((err, res) => {
                 if (err) {
