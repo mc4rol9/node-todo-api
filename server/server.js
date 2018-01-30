@@ -22,3 +22,15 @@ var Todo = mongoose.model('Todo', {
         type: Number
     }
 });
+
+// create a new instance
+var newTodo = new Todo({
+    text: 'Cook dinner'
+});
+
+// add a new model instance to db
+newTodo.save().then((doc) => {
+    console.log('Saved todo', doc);
+}, (e) => {
+    console.log('Unable to save todo')
+});
