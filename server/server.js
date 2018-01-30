@@ -14,6 +14,8 @@ var {User} = require('./models/user');
 
 // setup app
 var app = express();
+// setup port from server or local 3000
+const port = process.env.PORT || 3000;
 
 // middleware
 app.use(bodyParser.json());
@@ -60,8 +62,8 @@ app.get('/todos/:id', (req, res) => {
     });
 });
 
-app.listen(3000, () => {
-    console.log('Started on port 3000');
+app.listen(port, () => {
+    console.log(`Started on port 3000 ${port}`);
 });
 
 // export app for testing
