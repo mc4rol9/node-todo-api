@@ -10,10 +10,18 @@ const request = require('supertest');
 const {app} = require('./../server');
 const {Todo} = require('./../models/todo');
 
+// dummy todos for testing
+const todos = [{
+    text: 'Test 1'
+}, {
+    text: 'Test 2'
+}];
+
 // to run before any test case
 beforeEach((done) => {
-    // empty todos in db
-    Todo.remove({}).then(() => done());
+    Todo.remove({}).then(() => {
+        return Todo.insertMany(todos);
+    }).then(() => done());
 });
 
 describe('POST /todos', () => {
@@ -33,7 +41,7 @@ describe('POST /todos', () => {
                 }
 
                 // fetch everything in the collection
-                Todo.find().then((todos) => {
+                Todo.find({text}).then((todos) => {
                     expect(todos.length).toBe(1);
                     expect(todos[0].text).toBe(text);
                     done();
@@ -52,7 +60,7 @@ describe('POST /todos', () => {
                 }
 
                 Todo.find().then((todos) => {
-                    expect(todos.length).toBe(0);
+                    expect(todos.length).toBe(2);
                     done();
                 }).catch((e) => done(e));
             });
