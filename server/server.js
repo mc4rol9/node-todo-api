@@ -3,9 +3,10 @@
 //
 
 // load in libraries
-var express = require('express');
-var bodyParser = require('body-parser');
-var {ObjectId} = require('mongodb');
+const _ = require('lodash');
+const express = require('express');
+const bodyParser = require('body-parser');
+const {ObjectId} = require('mongodb');
 
 // import/load in project files
 var {mongoose} = require('./db/mongoose');
@@ -74,6 +75,38 @@ app.delete('/todos/:id', (req,res) => {
         if(!todo) {
             return res.status(404).send();
         }
+        res.send({todo});
+    }).catch((e) => {
+        res.status(400).send();
+    });
+});
+
+// update todos
+app.patch('/todos/:id', (req, res) => {
+    var id = req.params.id;
+    // to get text and completed properties from body
+    // that is what users can change
+    var body = _.pick(req.body, ['text', 'completed']);
+
+    if(!ObjectId.isValid(id)) {
+        return res.status(404).send();
+    }
+
+    // check if completed is boolean and True
+    if (_.isBoolean(body.completed) && body.completed) {
+        // add time to completedAt
+        body.completedAt = new Date().getTime();
+    } else {
+        body.completed = false;
+        body.completedAt = null;
+    }
+
+    // query to update the db
+    Todo.findByIdAndUpdate(id, {$set: body}, {new: true}).then((todo) => {
+        if(!todo) {
+            return res.status(404).send();
+        }
+
         res.send({todo});
     }).catch((e) => {
         res.status(400).send();
