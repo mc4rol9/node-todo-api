@@ -28,26 +28,47 @@ var Todo = mongoose.model('Todo', {
     }
 });
 
-// // create a new instance
-// var newTodo = new Todo({
-//     text: 'Cook dinner'
-// });
+    // // create a new instance
+    // var newTodo = new Todo({
+    //     text: 'Cook dinner'
+    // });
 
-// // add a new model instance to db
-// newTodo.save().then((doc) => {
-//     console.log('Saved todo', doc);
-// }, (e) => {
-//     console.log('Unable to save todo')
-// });
+    // // add a new model instance to db
+    // newTodo.save().then((doc) => {
+    //     console.log('Saved todo', doc);
+    // }, (e) => {
+    //     console.log('Unable to save todo')
+    // });
 
-var otherTodo = new Todo({
-    text: 'Feed the cat',
-    completed: true,
-    completedAt: 123
+    // var otherTodo = new Todo({
+    //     text: 'Feed the cat',
+    //     completed: true,
+    //     completedAt: 123
+    // });
+
+    // otherTodo.save().then((doc) => {
+    //     console.log(JSON.stringify(doc, undefined, 2));
+    // }, (e) => {
+    //     console.log('Unable to save', e);
+    // });
+
+// user model
+var User = mongoose.model('User', {
+    email: {
+        type: String,
+        required: true,
+        minlength: 1,
+        trim: true
+    }
 });
 
-otherTodo.save().then((doc) => {
-    console.log(JSON.stringify(doc, undefined, 2));
-}, (e) => {
-    console.log('Unable to save', e);
-});
+    // create new user
+    var user = new User({
+        email: 'carol@carol.com'
+    });
+
+    user.save().then((doc) => {
+        console.log('User saved', doc);
+    }, (e) => {
+        console.log('Unable to save the user', e);
+    });
