@@ -39,3 +39,15 @@ var Todo = mongoose.model('Todo', {
 // }, (e) => {
 //     console.log('Unable to save todo')
 // });
+
+var otherTodo = new Todo({
+    text: 'Feed the cat',
+    completed: true,
+    completedAt: 123
+});
+
+otherTodo.save().then((doc) => {
+    console.log(JSON.stringify(doc, undefined, 2));
+}, (e) => {
+    console.log('Unable to save', e);
+});
