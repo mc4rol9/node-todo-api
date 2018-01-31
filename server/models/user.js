@@ -5,6 +5,7 @@
 // load in mongoose
 const mongoose = require('mongoose');
 const validator = require('validator');
+const jwt = require('jsonwebtoken');
 
 // implement user schema to be able to use methods on models
 var UserSchema = new mongoose.Schema({
@@ -35,6 +36,19 @@ var UserSchema = new mongoose.Schema({
         }
     }]
 });
+
+// add method to generate auth token
+UserSchema.methods.generateAuthToken = function () {
+    var user = this;
+    var access = 'auth';
+    var token = jwt.sign({_id: user._id.toHexString(), access}, 'abc123').toString();
+    // update token in user model
+    user.tokens.push({acces, token});
+    // save the update
+    return user.save().then(() => {
+        return token;
+    });
+};
 
 // user model
 var User = mongoose.model('User', UserSchema);
