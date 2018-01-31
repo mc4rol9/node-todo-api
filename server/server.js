@@ -2,6 +2,7 @@
 // TODO APP - ROOT FILE
 //
 
+// load config file
 require('./config/config');
 
 // load in libraries
@@ -23,7 +24,7 @@ const port = process.env.PORT;
 // middleware
 app.use(bodyParser.json());
 
-// routes/endpoint
+// routes/endpoint for todos
 // create todo
 app.post('/todos', (req, res) => {
     var todo = new Todo({
@@ -113,6 +114,19 @@ app.patch('/todos/:id', (req, res) => {
     }).catch((e) => {
         res.status(400).send();
     });
+});
+
+// routes/endpoint for users
+// create new user
+app.post('/users', (req, res) => {
+    var body = _.pick(req.body, ['email', 'password']);
+    var user = new User(body);
+
+    user.save().then((user) => {
+        res.send(user);
+    }).catch((e) => {
+        res.status(400).send(e);
+    })
 });
 
 app.listen(port, () => {
