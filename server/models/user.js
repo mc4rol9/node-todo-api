@@ -6,8 +6,8 @@
 const mongoose = require('mongoose');
 const validator = require('validator');
 
-// user model
-var User = mongoose.model('User', {
+// implement user schema to be able to use methods on models
+var UserSchema = new mongoose.Schema({
     email: {
         type: String,
         required: true,
@@ -36,16 +36,8 @@ var User = mongoose.model('User', {
     }]
 });
 
-    // create new user for testing
-    // var user = new User({
-    //     email: 'carol@carol.com'
-    // });
-
-    // user.save().then((doc) => {
-    //     console.log('User saved', doc);
-    // }, (e) => {
-    //     console.log('Unable to save the user', e);
-    // });
+// user model
+var User = mongoose.model('User', UserSchema);
 
 // export model
 module.exports = {User};
