@@ -43,7 +43,7 @@ UserSchema.methods.generateAuthToken = function () {
     var access = 'auth';
     var token = jwt.sign({_id: user._id.toHexString(), access}, 'abc123').toString();
     // update token in user model
-    user.tokens.push({acces, token});
+    user.tokens.push({access, token});
     // save the update
     return user.save().then(() => {
         return token;
