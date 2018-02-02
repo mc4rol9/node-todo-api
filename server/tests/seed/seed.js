@@ -31,12 +31,14 @@ const users = [{
 // dummy todos for testing
 const todos = [{
     _id: new ObjectID(),
-    text: 'Test 1'
+    text: 'Test 1',
+    _creator: userOneId
 }, {
     _id: new ObjectID(),
     text: 'Test 2',
     completed: true,
-    completedAt: 333
+    completedAt: 333,
+    _creator: userTwoId
 }];
 
 const populateTodos = (done) => {
