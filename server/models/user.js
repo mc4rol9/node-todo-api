@@ -48,6 +48,7 @@ UserSchema.methods.toJSON = function () {
     return _.pick(userObject, ['_id', 'email']);
 };
 
+// INSTANCE METHODS
 // add instance method to generate auth token
 UserSchema.methods.generateAuthToken = function () {
     // user = document
@@ -62,6 +63,18 @@ UserSchema.methods.generateAuthToken = function () {
     });
 };
 
+// add instance method to delete token for logout
+UserSchema.methods.removeToken = function (token) {
+    var user = this;
+
+    return user.update({
+        $pull: {
+            tokens: {token}
+        }
+    });
+};
+
+// MODEL METHODS
 // add model method to find specific user by token
 UserSchema.statics.findByToken = function (token) {
     // User = model
@@ -105,7 +118,7 @@ UserSchema.statics.findByCredentials = function (email, password) {
     });
 };
 
-// mongoose middleware
+// MONGOOSE MIDDLEWARE
 // before save the document it'll hash the password
 UserSchema.pre('save', function (next) {
     var user = this;
