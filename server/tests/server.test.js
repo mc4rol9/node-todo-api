@@ -10,24 +10,10 @@ const {ObjectID} = require('mongodb');
 // load in project files
 const {app} = require('./../server');
 const {Todo} = require('./../models/todo');
-
-// dummy todos for testing
-const todos = [{
-    _id: new ObjectID(),
-    text: 'Test 1'
-}, {
-    _id: new ObjectID(),
-    text: 'Test 2',
-    completed: true,
-    completedAt: 333
-}];
+const {todos, populateTodos} = require('./seed/seed');
 
 // to run before any test case
-beforeEach((done) => {
-    Todo.remove({}).then(() => {
-        return Todo.insertMany(todos);
-    }).then(() => done());
-});
+beforeEach(populateTodos);
 
 describe('POST /todos', () => {
     it('should create a new todo', (done) => {
