@@ -82,6 +82,29 @@ UserSchema.statics.findByToken = function (token) {
     });
 };
 
+// add model method to find user for login
+UserSchema.statics.findByCredentials = function (email, password) {
+    // find user by e-mail
+    var User = this;
+    
+    return User.findOne({email}).then((user) => {
+        if(!user) {
+            return Promise.reject();
+        }
+
+        return new Promise((resolve, reject) => {
+            bcrypt.compare(password, user.password, (err, res) => {
+                if (res) {
+                    // it's resolved at the route in server.js
+                    resolve(user);
+                } else {
+                    reject();
+                }
+            });
+        });
+    });
+};
+
 // mongoose middleware
 // before save the document it'll hash the password
 UserSchema.pre('save', function (next) {
